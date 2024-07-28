@@ -1,5 +1,4 @@
-# Lab 1
-# Introduction
+# Lab 1: Introduction
 Matlab is a high-level programming language and interactive environment for numerical computing, visualization, and programming. It is used for solving linear and nonlinear problems numerically, and for analyzing data and developing algorithms. Matlab provides a command-line interface, a GUI environment, and a programming language. It is available for Windows, Mac, and Linux operating systems.
 
 
@@ -79,8 +78,7 @@ ans =
 
 
 
-# Lab 3
-# Vectors and Matrices
+# Lab 3: Vectors and Matrices
 Vectors are used to store multiple values in a single variable. They can be created using the `[]` operator. The values of a vector can be accessed using the `()` operator. Vectors are one dimensional while matrices are multi-dimensional. A scaler is a vector with only one element.
 ```matlab
 >> v = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

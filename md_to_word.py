@@ -10,8 +10,8 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.oxml import OxmlElement
 
-ROLL_NO = "A49"
-INPUT_MARKDOWN_FILE = "Enter path to input markdown file"
+ROLL_NO = "A02"
+INPUT_MARKDOWN_FILE = "./Soft Computing/all labs.md"
 
 
 def set_heading_style(doc, level, font_size, font_color):

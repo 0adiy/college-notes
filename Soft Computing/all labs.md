@@ -169,8 +169,6 @@ z =
 
 ### Theory
 
-Certainly! Here’s a list of the MATLAB functions used, along with a brief description for each:
-
 1. **`zeros(m, n)`**  
    Creates an \( m \times n \) matrix of zeros.
 
@@ -288,10 +286,7 @@ Lower Triangular Matrix:
 
 ### Aim
 
-Create a 5x5 matrix. Delete the last row and last column of the matrix.
-
-Create a matrix of 10 rows and 10 columns. The odd columns should contain values
-2, and the even columns, values 0.
+2. Create a 5x5 matrix. Delete the last row and last column of the matrix. Create a matrix of 10 rows and 10 columns. The odd columns should contain values 2, and the even columns, values 0.
 
 ### Code
 
@@ -346,4 +341,100 @@ Matrix after deleting last row and column:
     2     0     2     0     2     0     2     0     2     0
     2     0     2     0     2     0     2     0     2     0
     2     0     2     0     2     0     2     0     2     0
+```
+
+### Aim
+
+3. Do some cool operations: Create a 10 x 10 random matrix with the command A rand(10). Now do the following operations.
+   Multiply all elements by 100 and then round off all elements of the matrix to integers with the command A fix(A).
+   Replace all elements of A < 10 with zeros.
+   Replace all elements of A > 90 with infinity (inf).
+   Extract all 30 ay ≤ 50 in a vector & that is, find all elements of A that are between 30 and 50 and put them in a vector 6.
+
+### Code:
+
+```matlab
+% Step 1: Create a 10x10 random matrix
+A = rand(10);
+
+% Step 2: Multiply all elements by 100 and round to integers
+A = fix(A * 100);
+
+% Step 3: Replace all elements < 10 with zeros
+A(A < 10) = 0;
+
+% Step 4: Replace all elements > 90 with infinity
+A(A > 90) = inf;
+
+% Step 5: Extract all elements between 30 and 50 into a vector
+vector_6 = A(A >= 30 & A <= 50);
+
+% Display the resulting matrix and vector
+disp("Matrix A:");
+disp(A);
+disp("Vector with elements between 30 and 50:");
+disp(vector_6);
+```
+
+### Output:
+
+```matlab
+Matrix A:
+   57   83   20   40   97   60   80   81   19   14
+   18   30   15   50   90   52   25   62   79   10
+   44   88   12   55   25   20   93   10   45   11
+   67   75   23   91   31   11   39   88   61   53
+   77   13   41   62   80   12   10   72   19   15
+   21   32   55   44   70   29   49   41   15   11
+   59   16   38   50   39   10   81   95   66   73
+   89   33   20   14   11   19   28   52   45   42
+   11   30   26   78   48   31   13   21   10   91
+   44   84   15   11   70   59   39   30   66   97
+
+Matrix A:
+   57   inf   0    40   inf   60   inf   inf   0    0
+   0    30   0    50   inf   52   0    62   inf   0
+   44   inf   0    55   0    0    inf   0    45   0
+   inf  inf   0    inf   31   0    39   inf   61   53
+   inf  0    41   62   inf   0    0    inf   0    0
+   0    32   55   44   inf   0    49   41   0    0
+   59   0    38   50   39   0    inf   inf   66   inf
+   inf  33   0    0    0    0    0    52   45   42
+   0    30   0    inf   48   31   0    21   0    inf
+   44   inf   0    0    inf   59   39   30   66   inf
+
+Vector with elements between 30 and 50:
+   30   40   50   44   31   39   38   50   45   41   44   49   45   42   30
+```
+
+### Aim:
+
+4. Create a symmetric matrix: Create an upper triangular matrix with the following command:
+   A diag(1:6) diag(7:11,1) + diag(12:15,2)
+   Make sure you understand how this command works (see the on-line help on diag if required). Now use the upper off-diagonal terms of A to make A a symmetric matrix with the following command A = A three(A,1). This is a somewhat loaded command. It takes the upper triangular part of A above the main diagonal, fips it (transposes), and adds to the original matrix A, thus creating a symmetric matrix A.
+
+### Code:
+
+```matlab
+% Step 1: Create an upper triangular matrix
+A = diag(1:6) + diag(7:11, 1) + diag(12:15, 2);
+
+% Step 2: Make the matrix symmetric
+A = A + triu(A, 1)';
+
+% Display the resulting symmetric matrix
+disp("Symmetric Matrix A:");
+disp(A);
+```
+
+### Output:
+
+```matlab
+Symmetric Matrix A:
+   1   7  12   0   0   0
+   7   2   8  13   0   0
+  12   8   3   9  14   0
+   0  13   9   4  10  15
+   0   0  14  10   5   0
+   0   0   0  15   0   6
 ```

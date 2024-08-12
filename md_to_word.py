@@ -9,6 +9,7 @@ from docx.shared import RGBColor, Pt
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.oxml import OxmlElement
+import requests
 
 ROLL_NO = "A02"
 INPUT_MARKDOWN_FILE = "./Soft Computing/all labs.md"
@@ -95,6 +96,17 @@ def add_footer(doc):
     run._element.append(page_number_field)
 
 
+# Your existing functions...
+
+
+def add_image(doc, image_path):
+    # Add an image to the document.
+    try:
+        doc.add_picture(image_path)
+    except Exception as e:
+        print(f"Failed to add image {image_path}: {e}")
+
+
 def markdown_to_word(md_text, output_file):
     # Convert Markdown to HTML
     html = markdown.markdown(md_text, extensions=["fenced_code"])
@@ -117,19 +129,50 @@ def markdown_to_word(md_text, output_file):
                 add_page_break(doc)
             add_heading(
                 doc, element.get_text(), level=1, font_size=22, font_color=(0, 0, 0)
-            )  # Red color for headings
+            )
             first_heading = False
         elif element.name == "h2":
             add_heading(
                 doc, element.get_text(), level=2, font_size=18, font_color=(0, 0, 0)
-            )  # Blue color for subheadings
+            )
         elif element.name == "p":
-            add_paragraph(
-                doc, element.get_text(), font_color=(0, 0, 0)
-            )  # Default color for paragraphs
+            # Process paragraph text and images
+            for sub_element in element:
+                if sub_element.name == "img":
+                    img_url = sub_element.get("src")
+                    if img_url:
+                        # Download the image if it's a URL
+                        if img_url.startswith("http"):
+                            img_data = requests.get(img_url).content
+                            img_name = os.path.basename(img_url)
+                            with open(img_name, "wb") as handler:
+                                handler.write(img_data)
+                            add_image(doc, img_name)
+                            os.remove(img_name)  # Clean up downloaded image
+                        else:
+                            # If it's a local file, just use its path
+                            add_image(doc, img_url)
+            else:
+                if element.get_text() != "":
+                    add_paragraph(doc, element.get_text(), font_color=(0, 0, 0))
         elif element.name == "pre":
             code_text = element.get_text()
             add_code_block(doc, code_text)
+        elif element.name == "img":  # Detect image tags
+            img_url = element.get("src")
+            if img_url:
+                # Download the image if it's a URL
+                if img_url.startswith("http"):
+                    img_data = requests.get(img_url).content
+                    img_name = os.path.basename(img_url)
+                    with open(img_name, "wb") as handler:
+                        handler.write(img_data)
+                    add_image(doc, img_name)
+                    os.remove(img_name)  # Clean up downloaded image
+                else:
+                    # If it's a local file, just use its path
+                    add_image(doc, img_url)
+
     # Save the document
     doc.save(output_file)
 
